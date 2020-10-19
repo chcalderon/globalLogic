@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class JavaUtil {
 
     public static boolean validatePassword(String password) {
-        String pattern = "(?=.*[0-9]{2,})(?=.*[a-z])(?=.*[A-Z]{1,})(?=\\S+$).{4,}";
+        String pattern = "^[A-Z]{1}[a-z]{1,100}[0-9]{2}$";
 
         boolean result = false;
         if (password.matches(pattern)) {

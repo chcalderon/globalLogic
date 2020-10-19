@@ -1,7 +1,6 @@
 package com.example.demo.globallogic.userApi.controller;
 
 import com.example.demo.globallogic.userApi.entity.UserEntity;
-import com.example.demo.globallogic.userApi.model.Phone;
 import com.example.demo.globallogic.userApi.model.ServiceException;
 import com.example.demo.globallogic.userApi.model.User;
 import com.example.demo.globallogic.userApi.model.UserResponse;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Api("API User GlobalLogic")
 @RestController
 public class ControllerApi {
@@ -28,22 +24,6 @@ public class ControllerApi {
 
     public ControllerApi(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public UserEntity adminUser() throws Exception {
-        User user = new User();
-        user.setName("admin");
-        user.setPassword("Admin123");
-        user.setEmail("adasd@asd.cl");
-        List<Phone> phones= new ArrayList<>();
-        Phone phone = new Phone();
-        phone.setNumber("3453453");
-        phone.setCountrycode("56");
-        phone.setCitycode("02");
-        phones.add(phone);
-        user.setPhones(phones);
-        return userRepository.createUser(user);
-
     }
 
     @PostMapping("/login")
@@ -67,13 +47,13 @@ public class ControllerApi {
         }
         if (token.isEmpty())
             throw new ServiceException(HttpStatus.NOT_FOUND.value(), "Error at get token");
-        return new ResponseEntity<String>(token,HttpStatus.OK);
+        return new ResponseEntity<>(token,HttpStatus.OK);
     }
 
     @PostMapping(path = "/user", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserResponse> addUser(@RequestBody User usuario) throws ServiceException {
         UserEntity entityUser;
-        ServiceException serviceException;
+
        try{
 
            if (!JavaUtil.validatePassword(usuario.getPassword()))
@@ -92,7 +72,7 @@ public class ControllerApi {
            throw new ServiceException(HttpStatus.NOT_FOUND.value(), e.getMessage());
 
        }
-        return new ResponseEntity<UserResponse>(parseToUserResponse(entityUser),HttpStatus.OK);
+        return new ResponseEntity<>(parseToUserResponse(entityUser),HttpStatus.OK);
     }
 
     private UserResponse parseToUserResponse(UserEntity user) {

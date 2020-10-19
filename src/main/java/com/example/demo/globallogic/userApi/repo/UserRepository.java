@@ -5,7 +5,6 @@ import com.example.demo.globallogic.userApi.entity.UserEntity;
 import com.example.demo.globallogic.userApi.model.Phone;
 import com.example.demo.globallogic.userApi.model.User;
 import com.example.demo.globallogic.userApi.util.JavaUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
@@ -15,10 +14,13 @@ import java.util.List;
 
 @Repository
 public class UserRepository {
-    @Autowired
-    private EntityUserRepository entityUserRepository;
+    private final EntityUserRepository entityUserRepository;
 
-    public UserEntity createUser(final User user) throws Exception {
+    public UserRepository(EntityUserRepository entityUserRepository) {
+        this.entityUserRepository = entityUserRepository;
+    }
+
+    public UserEntity createUser(final User user) {
 
         UserEntity u = new UserEntity();
         u.setEmail(user.getEmail());
