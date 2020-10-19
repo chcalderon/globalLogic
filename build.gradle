@@ -1,0 +1,42 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+apply plugin: 'groovy'
+group = 'com.example.demo.globallogic'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.jetbrains:annotations:19.0.0'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.0.2'
+	//compile group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	testCompile(
+			'junit:junit:4.12',
+			'org.codehaus.groovy:groovy-all:2.4.4',
+			'org.spockframework:spock-core:1.1-groovy-2.4',
+			'org.springframework.boot:spring-boot-starter-test'
+	)
+}
+
+test {
+	useJUnitPlatform()
+}
